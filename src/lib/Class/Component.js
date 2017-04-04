@@ -20,7 +20,7 @@ import { Constructor } from './Constructor';
  * @property {function} onFixedUpdate A callback function to be called after the fixedUpdate of GameObject
  * @property {function} onUpdate A callback function to called after rendering the GameObject
  */
-export class Component extends Constructor{
+export default class Component extends Constructor{
   constructor(options){
     this.parent = undefined;
     this.__construct(this, options);
@@ -38,11 +38,6 @@ export class Component extends Constructor{
       return JSON.stringify(this);
   }
 }
-
-Component.prototype = new Constructor();
-Component.prototype.constructor = Component;
-
-module.exports = Component;
 
 /**
  * Constructs the Component with the parameters called in the constructor options object
