@@ -5,7 +5,10 @@
  * @author Thomas Alrek <thomas@alrek.no>
  */
 
-"use strict";
+'use strict';
+
+import { GameObject } from '../Class/GameObject';
+import { Color } from '../Components/Color';
 
 /**
  * @class Background
@@ -15,9 +18,10 @@
  * @constructor
  * @param {options} options An object containing construct options
  */
-function Background(options){
-    var self = this;
-    this.__extend(GameObject, this, options);
+export default class Background extends GameObject{
+  constructor(options) {
+    super(options);
+    let self = this;
     this.color = new Color({
         r: 0,
         g: 0,
@@ -25,15 +29,15 @@ function Background(options){
         alpha: 0,
         parent: this
     });
-    this.image = "";
+    this.image = '';
     this.imageWidth = 0;
     this.imageHeight = 0;
     this.__construct(this, options);
-    var image = new Image();
-    var loaded = false;
-    var pattern;
+    let image = new Image();
+    let loaded = false;
+    let pattern;
     this.__update = function(JSGameEngine){
-        var ctx = JSGameEngine.ctx;
+        let ctx = JSGameEngine.ctx;
         if(self.image !== image.src){
             loaded = false;
             pattern = undefined;
@@ -41,7 +45,7 @@ function Background(options){
                 self.imageWidth = image.width;
                 self.imageHeight = image.height;
                 loaded = true;
-            }
+            };
             image.src = self.image;
         }
         if(!loaded){
@@ -61,16 +65,12 @@ function Background(options){
         image.onload = function(){
             self.imageWidth = image.width;
             self.imageHeight = image.height;
-            console.log("loaded");
+            console.log('loaded');
             loaded = true;
-        }
+        };
         image.src = self.image;
         self.width = self.width || JSGameEngine.width;
         self.height = self.height || JSGameEngine.height;
     };
+  }
 }
-
-Background.prototype = new GameObject();
-Background.prototype.constructor = Background;
-
-module.exports = Background;
