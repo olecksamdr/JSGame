@@ -31,7 +31,7 @@ import { Particle } from './Particle';
  * @property {boolean} radial If true the particles will be emitted spherical
  * @property {Particle[]} particles An array containing all Particles
  */
-export default class ParticleSystem{
+export default class ParticleSystem extends GameObject{
   constructor(options){
     super(options);
     let self = this;
