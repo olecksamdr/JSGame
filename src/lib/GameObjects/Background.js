@@ -21,7 +21,6 @@ import { Color } from '../Components/Color';
 export default class Background extends GameObject{
   constructor(options) {
     super(options);
-    let self = this;
     this.color = new Color({
         r: 0,
         g: 0,
@@ -32,25 +31,24 @@ export default class Background extends GameObject{
     this.image = '';
     this.imageWidth = 0;
     this.imageHeight = 0;
-    this.__construct(this, options);
     let image = new Image();
     let loaded = false;
     let pattern;
-    this.__update = function(JSGameEngine){
+    this.__update = JSGameEngine => {
         let ctx = JSGameEngine.ctx;
-        if(self.image !== image.src){
+        if(this.image !== image.src){
             loaded = false;
             pattern = undefined;
             image.onload = function(){
-                self.imageWidth = image.width;
-                self.imageHeight = image.height;
+                this.imageWidth = image.width;
+                this.imageHeight = image.height;
                 loaded = true;
             };
-            image.src = self.image;
+            image.src = this.image;
         }
         if(!loaded){
-            if(self.color.alpha > 0){
-                ctx.fillStyle = self.color.toString();
+            if(this.color.alpha > 0){
+                ctx.fillStyle = this.color.toString();
             }
         }else{
             if(pattern === undefined){
@@ -58,19 +56,19 @@ export default class Background extends GameObject{
             }
             ctx.fillStyle = pattern;
         }
-        ctx.fillRect(Math.round(self.transform.position.x), Math.round(self.transform.position.y), Math.round(self.width), Math.round(self.height));
-        self.onUpdate(JSGameEngine);
+        ctx.fillRect(Math.round(this.transform.position.x), Math.round(this.transform.position.y), Math.round(this.width), Math.round(this.height));
+        this.onUpdate(JSGameEngine);
     };
-    this.__init = function(JSGameEngine){
-        image.onload = function(){
-            self.imageWidth = image.width;
-            self.imageHeight = image.height;
+    this.__init = JSGameEngine => {
+        image.onload = () => {
+            this.imageWidth = image.width;
+            this.imageHeight = image.height;
             console.log('loaded');
             loaded = true;
         };
-        image.src = self.image;
-        self.width = self.width || JSGameEngine.width;
-        self.height = self.height || JSGameEngine.height;
+        image.src = this.image;
+        this.width = this.width || JSGameEngine.width;
+        this.height = this.height || JSGameEngine.height;
     };
   }
 }
