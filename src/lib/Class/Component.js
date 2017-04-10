@@ -22,14 +22,14 @@ import { Constructor } from './Constructor';
  */
 export default class Component extends Constructor{
   constructor(options){
+    super(options);
     this.parent = undefined;
-    this.__construct(this, options);
-    this.onUpdate = function(){};
-    this.onFixedUpdate = function(){};
-    this.__update = function(JSGameEngine){
+    this.onUpdate = () => {};
+    this.onFixedUpdate = () => {};
+    this.__update = JSGameEngine => {
         this.onUpdate(JSGameEngine);
     };
-    this.__fixedUpdate = function(JSGameEngine){
+    this.__fixedUpdate = JSGameEngine => {
         this.onFixedUpdate(JSGameEngine);
     };
   }
